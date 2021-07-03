@@ -59,14 +59,14 @@ class parser {
                 $fund_doc_dec = json_decode($fund_doc_json);
                 $charset = mb_detect_encoding($fund_doc_dec);
                 $fund_doc_ready = iconv($charset, "UTF-8", $fund_doc_dec);
-                
+
                 $words = explode(' ', $fund_doc_ready);
-                foreach($words as $i => $word){
-                    if((preg_match('/(^[а-я]|[а-я]$|[а-я].$)/u', $word)) && (preg_match('/[a-zA-Z]/u', $word))){
+                foreach ($words as $i => $word) {
+                    if ((preg_match('/(^[а-я]|[а-я]$|[а-я].$)/u', $word)) && (preg_match('/[a-zA-Z]/u', $word))) {
                         $words[$i] = preg_replace('/[А-Яa-zA-Z0-9$#;,.]/u', '', $word);
                     }
                 }
-                
+
                 $fund_doc_ready = implode(' ', $words);
 
                 return preg_replace('/[^а-я А-Яa-zA-Z0-9$#,.;-]/u', '', $fund_doc_ready);
@@ -179,15 +179,22 @@ class parser {
         foreach ($array as $val) {
             $val_arr = explode(';', $val);
             foreach ($val_arr as $data_el) {
-                $el_clean = trim($data_el);
+                $el_clean = $data_el;
                 $pages = '';
-                if (stripos($el_clean, 'л.')) {
+                if (stripos($data_el, 'л.')) {
                     $el_arr = explode('л.', $el_clean);
-                    $el_clean = trim($el_arr[0]);
-                    $pages = explode('-', $el_arr[1]);
+                    if (strlen($el_arr[0]) < 2) {
+                        end($data_arr);
+                        $i = key($data_arr);
+                        $data_arr[$i]['pages'] = explode('-', $el_arr[1]);
+                        continue;
+                    } else {
+                        $el_clean = $el_arr[0];
+                        $pages = explode('-', $el_arr[1]);
+                    }
                 }
                 $data_arr[] = [
-                    'doc' => $el_clean,
+                    'doc' => trim($el_clean),
                     'pages' => $pages
                 ];
             }
