@@ -18,7 +18,7 @@ if (isset($arg)) {
 
 include 'loader.php';
 
-$class_name = '\dusty\\' . $class;
+$class_name = '\archive\\' . $class;
 $class_obj = new $class_name(...$arg);
 $response = $class_obj->$method(...$params);
 
