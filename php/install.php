@@ -2,8 +2,8 @@
 
 echo "<h3>CIPHER ARCHIVE DATABASE STRUCTURE ARCHIVE</h3><br>";
 
-include 'dusty/loader.php';
-$db = new dusty\database\database();
+include 'archive/loader.php';
+$db = new archive\database\database();
 
 $tbl_arr = [
     'items_catalog' =>
@@ -32,6 +32,22 @@ $tbl_arr = [
             date VARCHAR(255) NOT NULL,
             pages INT NOT NULL,
             extra LONGTEXT NOT NULL
+	)",
+    'page' =>
+    "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            url VARCHAR(255) NOT NULL,
+            access VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,	
+            description VARCHAR(255) NOT NULL,
+            keywords VARCHAR(255) NOT NULL,
+            parent_id INT NOT NULL,
+            inherit VARCHAR(6) NOT NULL DEFAULT 'false',
+            content_tbl VARCHAR(255) NOT NULL,
+            dynamic_meta VARCHAR(6) NOT NULL DEFAULT 'false',
+            redirect_id INT NOT NULL,
+            priority INT NOT NULL DEFAULT 1,
+            active VARCHAR(6) NOT NULL DEFAULT 'true'            
 	)"
 ];
 
