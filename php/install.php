@@ -6,6 +6,11 @@ include 'archive/loader.php';
 $db = new archive\database\database();
 
 $tbl_arr = [
+    'funds' =>
+    "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            fund VARCHAR(100) NOT NULL
+	)",
     'items_catalog' =>
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -94,7 +94,7 @@ class page {
             'js' => ''
         ];
 
-        if (($page['parent_id'] != 0) && ($page['parent_inherit'] == 'true')) {
+        if (($page['parent_id'] != 0) && ($page['inherit'] == 'true')) {
             $parent_id = $page['parent_id'];
             $parent = $this->db->fetch_query('pages', "WHERE id='$parent_id'");
             $page_active_expansion = $this->get_page_expansion($parent);
@@ -149,7 +149,17 @@ class page {
             $this->redirect_page($page['redirect_id']);
         } else {
             if ($page['dynamic_meta'] == 'true') {
-                $page_meta = $this->get_page_meta($content);
+                $page_meta = [
+                    'title' => '',
+                    'description' => '',
+                    'keywords' => ''
+                ];
+                foreach($page_meta as $key => $val){
+                    if(isset($content[$key])){
+                        $page_meta[$key] = $content[$key];
+                    }
+                }
+                
             }
         }
 
