@@ -258,6 +258,7 @@ class parser {
     function push_catalog_db(
             $tbl_name,
             $fund_id,
+            $inv_id,
             $voc
     ) {
         $db = new db();
@@ -267,6 +268,7 @@ class parser {
             $row_exist = $db->fetch_query($tbl_name . '_catalog', "WHERE fund='$fund_id' AND name='$name'", 'id');
             if (empty($row_exist)) {
                 $row['fund'] = $fund_id;
+                $row['inv'] = $inv_id;
                 $row['data'] = json_encode($row['data']);
                 $db->insert_row($tbl_name . '_catalog', $row);
             }
@@ -277,6 +279,7 @@ class parser {
 
     function push_protocol_db(
             $fund_id,
+            $inv_id,
             $voc
     ) {
         $db = new db();
@@ -286,6 +289,7 @@ class parser {
             $row_exist = $db->fetch_query('protocols', "WHERE fund='$fund_id' AND num='$num'", 'id');
             if (empty($row_exist)) {
                 $row['fund'] = $fund_id;
+                $row['inv'] = $inv_id;
                 $row['extra'] = json_encode($row['extra']);
                 $db->insert_row('protocols', $row);
             }
@@ -296,6 +300,7 @@ class parser {
 
     function compile_fund_catalog(
             $fund_id,
+            $inv_id,
             $doc
     ) {
         $fund_doc = $this->read_fund_doc($doc);
@@ -304,7 +309,7 @@ class parser {
             $cat_assoc = $this->get_catalog_assoc($cat_tbl);
             $voc_method = 'get_' . $key . '_voc';
             $cat_voc = $this->$voc_method($cat_assoc);
-            $this->push_catalog_db($key, $fund_id, $cat_voc);
+            $this->push_catalog_db($key, $fund_id, $inv_id, $cat_voc);
         }
 
         return;
@@ -312,12 +317,13 @@ class parser {
 
     function compile_fund_protocol(
             $fund_id,
+            $inv_id,
             $doc
     ) {
         $fund_doc = $this->read_fund_doc($doc);
         $prot_tbl = $this->get_protocol_tbl($fund_doc);
         $prot_voc = $this->get_protocol_voc($prot_tbl);
-        $this->push_protocol_db($fund_id, $prot_voc);
+        $this->push_protocol_db($fund_id, $inv_id, $prot_voc);
 
         return $prot_voc;
     }

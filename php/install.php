@@ -15,6 +15,7 @@ $tbl_arr = [
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             fund VARCHAR(100) NOT NULL,
+            inv VARCHAR(100) NOT NULL,
             name VARCHAR(255) NOT NULL,	
             type VARCHAR(255) NOT NULL,
             data LONGTEXT NOT NULL
@@ -23,6 +24,7 @@ $tbl_arr = [
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             fund VARCHAR(100) NOT NULL,
+            inv VARCHAR(100) NOT NULL,
             name VARCHAR(255) NOT NULL,	
             role VARCHAR(255) NOT NULL,
             data LONGTEXT NOT NULL
@@ -31,6 +33,7 @@ $tbl_arr = [
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             fund VARCHAR(100) NOT NULL,
+            inv VARCHAR(100) NOT NULL,
             num VARCHAR(100) NOT NULL,	
             num_old VARCHAR(100) NOT NULL,
             title VARCHAR(255) NOT NULL,
