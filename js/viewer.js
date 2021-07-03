@@ -21,12 +21,28 @@ $(document).on("mousemove", function (e) {
 });
 
 $(document).on('click', 'html', function () {
-    if(mouse_down){
+    if (mouse_down) {
         mouse_down = false;
     }
 });
 
 $(document).on('click', '#doc_zoom_in', function () {
+    zoom_in();
+});
+
+$(document).on('click', '#doc_zoom_out', function () {
+    zoom_out();
+});
+
+$('#doc_viewport>div').bind('mousewheel', function (e) {
+    if (e.originalEvent.wheelDelta / 120 > 0) {
+        zoom_in();
+    } else {
+        zoom_out();
+    }
+});
+
+function zoom_in() {
     let new_zoom = '100%',
             current_zoom = define_zoom();
     if (current_zoom < 500) {
@@ -39,9 +55,9 @@ $(document).on('click', '#doc_zoom_in', function () {
             moveable = false;
         }
     }
-});
+}
 
-$(document).on('click', '#doc_zoom_out', function () {
+function zoom_out() {
     let new_zoom = '100%',
             current_zoom = define_zoom();
     if (current_zoom >= 125) {
@@ -56,7 +72,7 @@ $(document).on('click', '#doc_zoom_out', function () {
             moveable = true;
         }
     }
-});
+}
 
 $(document).on('click', '#doc_zoom_reset', function () {
     $('#doc_viewport>div').css('height', '100%');
@@ -74,6 +90,6 @@ function define_zoom() {
     return current_zoom;
 }
 
-$('#doc_viewport>div').bind('contextmenu', function() {
+$('#doc_viewport>div').bind('contextmenu', function () {
     return false;
 });
