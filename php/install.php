@@ -33,7 +33,7 @@ $tbl_arr = [
             pages INT NOT NULL,
             extra LONGTEXT NOT NULL
 	)",
-    'page' =>
+    'pages' =>
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             url VARCHAR(255) NOT NULL,
@@ -41,13 +41,28 @@ $tbl_arr = [
             title VARCHAR(255) NOT NULL,	
             description VARCHAR(255) NOT NULL,
             keywords VARCHAR(255) NOT NULL,
-            parent_id INT NOT NULL,
+            parent_id INT NOT NULL DEFAULT 0,
             inherit VARCHAR(6) NOT NULL DEFAULT 'false',
             content_tbl VARCHAR(255) NOT NULL,
             dynamic_meta VARCHAR(6) NOT NULL DEFAULT 'false',
-            redirect_id INT NOT NULL,
+            redirect_id INT NOT NULL DEFAULT 0,
             priority INT NOT NULL DEFAULT 1,
             active VARCHAR(6) NOT NULL DEFAULT 'true'            
+	)",
+    'users' =>
+    "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            access VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            first_name VARCHAR(255) NOT NULL,	
+            second_name VARCHAR(255) NOT NULL,
+            third_name VARCHAR(255) NOT NULL,
+            birthday DATE NOT NULL,            
+            password TEXT NOT NULL,
+            token TEXT NOT NULL, 
+            new_password TEXT NOT NULL,
+            new_email VARCHAR(255) NOT NULL,
+            new_token TEXT NOT NULL     
 	)"
 ];
 
