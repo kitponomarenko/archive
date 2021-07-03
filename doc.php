@@ -27,7 +27,7 @@ include 'php/archive/layout/layout_top.php';
                 <p>док 001 титульный лист</p>
             </div>
             <div class="doc_page_controls">   
-                <div><p>страница</p><p id="doc_page_num"><?= $page['content']['num'] ?></p></div>
+                <div><p>страница</p><p><span id="doc_page_num"><?= $page['content']['num'] ?></span>/<?= $page['content']['pages'] ?></p></div>
                 <div>                    
                     <button id="doc_page_prev">
                         <svg width="130" height="16" viewBox="0 0 130 16" fill="none" xmlns="http://www.w3.org/2000/svg">
