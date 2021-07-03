@@ -1,0 +1,241 @@
+:root {
+    --color_brand: #F5144A;
+    --color_brand_alt: #D91242;
+    --color_error: #F1D302;
+    --color_black: #020100;
+    --color_white: #FDFFFC;
+    --color_background: #FDFFFC;
+    --color_grey: #808080;
+    --color_grey_light: #EAEAEA;
+    --color_grey_dark: #404040;
+    
+    --basic_font: 'noto-sans-disp';
+    
+    --tiny_font_size: 12px;
+    --basic_font_size: 16px;
+    --big_font_size: 24px;
+    --large_font_size: 64px;
+    --huge_font_size: 96px;
+    
+    --basic_margin: 32px;
+    --av_margin: 64px;    
+    
+    --basic_transition: all 0.2s ease-in;
+}
+
+
+::-webkit-scrollbar{
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: var(--color_grey_light);
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: var(--color_grey);
+}
+
+::-webkit-scrollbar-track{
+    border-width:0;
+}
+
+::-webkit-scrollbar-track:hover{
+    border-left: solid 1px var(--color_grey_light);
+}
+
+html {
+    font-size: var(--basic_font_size);
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+}
+
+
+* {
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+}
+
+input,
+button {
+    border-radius: 0;
+}
+
+textarea,
+input,
+button,
+a {
+    -webkit-appearance: none;
+    outline: none;
+}
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
+input::-webkit-clear-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+body,
+body * {
+    margin: 0;
+    font-family: var(--basic_font);
+    font-style: normal;
+    font-size: var(--basic_font_size);
+    font-weight: 400;
+}
+
+h2 {
+    font-size: var(--huge_font_size);
+    font-weight: 400;
+}
+
+h3 {
+    width: 100%;
+    font-size: var(--large_font_size);
+    margin: 0;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: var(--big_font_size);
+    font-weight: 400;
+}
+
+p,
+pre,
+b,
+a,
+i,
+li,
+label,
+input,
+button,
+textarea {
+    font-family: var(--basic_font);
+    font-size: var(--basic_font_size);
+    font-weight: 400;
+}
+
+
+span{
+    font-size: inherit;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+pre>* {
+    margin: 0;
+}
+
+.tiny_text{
+    font-size: var(--tiny_text_font_size);
+}
+
+a.tiny_text>u{
+    font-size: var(--tiny_text_font_size);
+}
+
+b {
+    font-weight: 600;
+}
+
+li {
+    margin: 0;
+}
+
+a {
+    color: var(--color_black);
+    text-decoration: none;
+}
+
+a>u {
+    color: var(--color_black);
+    text-decoration: none;
+    border-bottom: 1px var(--color_black) dotted;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+}
+
+a:hover>u {
+    color: var(--color_brand);
+    border-bottom: 1px var(--color_brand) solid;
+    transition: all 0.2s ease-in;
+}
+
+.main_wrap{
+    width: 100%;
+}
+
+.home_wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;    
+}
+
+.home_wrap>div{
+    height: 100%;
+    width: 50%;
+}
+
+.home_wrap>div:first-child{
+    background-color: var(--color_brand);
+    padding: var(--av_margin);
+    box-sizing: border-box;   
+}
+
+.home_wrap>div:first-child>h2{
+    color: var(--color_white);
+}
+
+.home_card_wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 50%;
+    padding: var(--av_margin);
+    box-sizing: border-box;
+    transition: var(--basic_transition);
+    cursor: pointer;
+}
+
+.home_card_wrap:hover{
+    background-color: var(--color_black);
+}
+
+.home_card_wrap:hover *{
+    color: var(--color_white);
+}
+
+.home_card_wrap:hover path{
+    fill: var(--color_white);
+}
+
+.home_card_wrap:first-child{
+    border-bottom: 1px solid var(--color_black);
+}
+
+.home_card_wrap>div:first-child>h3{
+    margin: 0 0 var(--basic_margin);
+}
+
+.home_card_wrap>div:last-child{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%
+}
+
+.home_card_wrap>div:last-child>p{
+    font-size: var(--big_font_size);
+}
