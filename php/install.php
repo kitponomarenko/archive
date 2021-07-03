@@ -11,6 +11,22 @@ $tbl_arr = [
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             fund VARCHAR(100) NOT NULL
 	)",
+    'invs' =>
+    "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            fund VARCHAR(100) NOT NULL,
+            inv VARCHAR(100) NOT NULL
+	)",
+    'entries' =>
+    "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            fund VARCHAR(100) NOT NULL,
+            inv VARCHAR(100) NOT NULL,
+            doc VARCHAR(100) NOT NULL,
+            entry TEXT NOT NULL,
+            priority INT NOT NULL DEFAULT 1,
+            views INT NOT NULL DEFAULT 0
+	)",
     'items_catalog' =>
     "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

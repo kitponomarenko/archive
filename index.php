@@ -6,6 +6,7 @@ include 'php/archive/layout/layout_top.php';
     <div class="home_wrap">
         <div>
             <h2>Государственный архив Оренбургской области</h2>
+            <a class="home_main_link" href="http://www.orenarhiv.ru/">перейти на основной сайт архива</a>
         </div>
         <div>
             <div class="home_card_wrap">
