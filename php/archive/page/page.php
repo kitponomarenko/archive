@@ -113,17 +113,19 @@ class page {
             $page
     ) {
         $result = [
-            'css' => $page['js'],
-            'js' => $page['css']
+            'css' => '',
+            'js' => ''
         ];
 
         foreach ($result as $type => $expansion) {
-            $exp_arr = explode(',', $expansion);
+            $exp_arr = explode(',', $page[$type]);
             foreach ($exp_arr as $exp) {
-                if ($type == 'css') {
-                    $result['css'] .= '<link rel="stylesheet" href="css/' . $exp . '.css">';
-                } else if ($type == 'js') {
-                    $result['js'] .= '<script src="js/' . $exp . '.js"></script>';
+                if (!empty($exp)) {
+                    if ($type == 'css') {
+                        $result['css'] .= '<link rel="stylesheet" href="css/' . $exp . '.css">';
+                    } else if ($type == 'js') {
+                        $result['js'] .= '<script src="js/' . $exp . '.js"></script>';
+                    }
                 }
             }
         }
@@ -154,12 +156,11 @@ class page {
                     'description' => '',
                     'keywords' => ''
                 ];
-                foreach($page_meta as $key => $val){
-                    if(isset($content[$key])){
+                foreach ($page_meta as $key => $val) {
+                    if (isset($content[$key])) {
                         $page_meta[$key] = $content[$key];
                     }
                 }
-                
             }
         }
 
