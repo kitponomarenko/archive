@@ -17,12 +17,44 @@ class file {
 
         $this->type = [
             'default' => [],
+            'autoload_zip' => [
+                'size' => 10000,
+                'path' => 'fond/',
+                'tmp' => '',
+                'success' => 'success_default',
+                'output' => 'uploaded_zip',
+                'mime' => [
+                    'application/zip'
+                ],
+                'limit' => 1,
+                'randomize_name' => false,
+                'force_type' => ''
+            ], 'doc' => [
+                'size' => 10000,
+                'path' => 'docs/funds',
+                'tmp' => '',
+                'force_type' => '',
+                'success' => 'success_default',
+                'output' => 'uploaded_zip',
+                'mime' => [
+                    'application/msword'
+                ],
+                'limit' => 0
+            ],
             'photo' => [
                 'size' => 3,
                 'path' => '../',
-                'force_type' => '.jpg',
+                'tmp' => '',
+                'force_type' => '',
                 'success' => 'success_default',
-                'output' => 'uploaded_file'
+                'output' => 'uploaded_photo',
+                'mime' => [
+                    'image/jpeg',
+                    'image/tiff',
+                    'image/jpg',
+                    'image/tif'
+                ],
+                'limit' => 0
             ]
         ];
 
@@ -43,17 +75,20 @@ class file {
     ) {
         if (is_uploaded_file($_FILES['file']['tmp_name'][$key])) {
             $path = $this->type[$type]['path'] . $this->type[$type]['tmp'];
-            $this->clean_up_dir($path, 180);
             $file_type = $this->get_file_type($_FILES['file']['name'][$key]);
-            $file_id = md5(uniqid(rand(), 1));
-            $file_name_new = '' . $file_id . '_' . $file_type . '';
+            $file_name_new = $_FILES['file']['name'][$key];
+            if ($this->type[$type]['randomize_name'] == true) {
+                $file_id = md5(uniqid(rand(), 1));
+                $file_name_new = '' . $file_id . '_' . $file_type . '';
+            }
             if ($this->type[$type]['force_type'] != '') {
                 $file_name_new = $file_name_new . '.' . $this->type[$type]['force_type'] . '';
             }
             $tmp_file = $_FILES['file']['tmp_name'][$key];
 
-            $file = basename($file_name_new);
-            move_uploaded_file($tmp_file, "__DIR__ /../../$path/$file");
+            $file_name_arr = explode('/', $file_name_new);
+            $file = array_pop($file_name_arr);
+            move_uploaded_file($tmp_file, "__DIR__ /../../../$path/$file");
             array_push($this->upload_result['file'], $file);
             $this->upload_result['output'] .= $this->bake_output($this->type[$type]['output'], $path, $file);
         }
@@ -86,7 +121,7 @@ class file {
                 if ($this->is_correct_mime($key, $this->type[$type]['mime']) == true) {
                     $this->check_file_size($key, $type);
                 } else {
-                    array_push($this->upload_result['error'], 'Неверный тип файла:' . $_FILES['file']['name'][$key]);
+                    array_push($this->upload_result['error'], 'Неверный тип файла');
                     $limit_actual = $this->check_limit($limit_actual, $file_count);
                 }
             }
@@ -239,7 +274,7 @@ class file {
             string $dir,
             int $expire = 60
     ) {
-        $path = __DIR__ . '/../../' . $dir;
+        $path = __DIR__ . '/../../../' . $dir;
         $dir_content = scandir($path);
         foreach ($dir_content as $file) {
             if (($file != '.') && ($file != '..')) {
@@ -256,11 +291,29 @@ class file {
             string $dir
     ) {
         $result = false;
-        $dir = __DIR__ . '/../../' . $dir;
+        $dir = __DIR__ . '/../../../' . $dir;
         if (!file_exists($dir) && !is_dir($dir)) {
             $result = mkdir($dir);
         }
         return $result;
+    }
+
+    function remove_dir(
+            $dir
+    ) {
+        $path = __DIR__ . '/../../../' . $dir;
+        $content = scandir($path);
+        foreach ($content as $ent) {
+            if ($ent != "." && $ent != "..") {
+                if (is_dir($path . "/" . $ent)) {
+                    $this->remove_dir($dir . "/" . $ent);
+                } else {
+                    unlink($path . "/" . $ent);
+                }
+            }
+        }
+
+        return rmdir($path);
     }
 
 }

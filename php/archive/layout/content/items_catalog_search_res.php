@@ -19,12 +19,18 @@ foreach ($cat_data as $doc) {
         if (!empty($doc['pages'])) {
             if (count($doc['pages']) == 1) {
                 $page_str = $doc['pages'][0];
+                if (stripos($doc['pages'][0], 'об') > 0){
+                    $page_str = trim(str_replace('об', '', $doc['pages'][0])) + 1;
+                }
+                $page_link = $page_str;
             } else if (count($doc['pages']) == 2) {
                 $page_str = implode('-', $doc['pages']);
+                $page_link = $doc['pages'][0];
             } else if (count($doc['pages']) > 2) {
                 $page_str = implode(',', $doc['pages']);
+                $page_link = $doc['pages'][0];
             }
-            $pages = '<a ' . $abs_class . ' href="doc?id=' . $doc_data['id'] . '&page=' . $doc['pages'][0] . '">стр. ' . $page_str . '</a>';
+            $pages = '<a ' . $abs_class . ' href="doc?id=' . $doc_data['id'] . '&page=' . $page_link . '">стр. ' . $page_str . '</a>';
         }
 
         $docs_list .= '<div><a ' . $abs_class . ' href="doc?id=' . $doc_data['id'] . '">' . $doc_data['title'] . '</a>' . $pages . '</div>';

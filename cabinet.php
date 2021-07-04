@@ -3,16 +3,20 @@ include 'php/archive/layout/layout_top.php';
 ?>
 
 <div class="main_wrap">
-    <div class="home_wrap">
-        <div>
-            <h2>Государственный архив Оренбургской области</h2>
-            <a class="home_main_link" href="http://www.orenarhiv.ru/">перейти на основной сайт архива</a>
+    <div class="cabinet_wrap">
+        <div class="user_data">
+            <h3>Личный кабинет</h3>
+            <p class="user_status">администратор</p>
+            <p>Пономаренко Никита Дмитриевич</p>
+            <p>18.09.1994 года рождения</p>
+            <p>kitponomarenko@gmail.com</p>
+            <a class="button_brand_back">изменить данные</a>
         </div>
         <div>
-            <a class="home_card_wrap" href="lib">
+            <a class="home_card_wrap" href="funds">
                 <div>
-                    <h3>Читальный зал</h3>
-                    <p>ознакомьтесь с оцифрованными документами онлайн</p>
+                    <h3>Управление фондами</h3>
+                    <p>создание фондов, описей, дел, ручная загрузка сканов, синхронизация с БД</p>
                 </div>
                 <div>
                     <p>01</p>
@@ -21,10 +25,10 @@ include 'php/archive/layout/layout_top.php';
                     </svg>
                 </div>
             </a>
-            <a class="home_card_wrap" href="cabinet">
+            <a class="home_card_wrap" href="autoload">
                 <div>
-                    <h3>Личный кабинет</h3>
-                    <p>проверьте ответы на свои запросы</p>
+                    <h3>Автозагрузка</h3>
+                    <p>автоматическое добавление фондов из zip архива</p>
                 </div>
                 <div>
                     <p>02</p>

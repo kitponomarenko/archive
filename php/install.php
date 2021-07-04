@@ -116,8 +116,13 @@ $pages_arr = [
     [
         'url' => 'cabinet',
         'access' => 1,
-        'title' => 'Личный кабинет',
-        'js' => 'cabinet'
+        'title' => 'Личный кабинет'
+    ],
+    [
+        'url' => 'autoload',
+        'access' => 1,
+        'title' => 'Автозагрузка',
+        'js' => 'autoload,files'
     ]
 ];
 

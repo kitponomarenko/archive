@@ -2,7 +2,7 @@
 
 namespace archive\catalog;
 
-include 'php/archive/loader.php';
+include __DIR__ . '/../loader.php';
 
 use archive\database\database as db;
 use archive\tools\file as file;
@@ -57,7 +57,7 @@ class handler {
         $dir = 'fond/Фонд ' . $fund . '/Опись ' . $inv . '/д.' . $doc;
         if (file_exists(__DIR__ . '/../../../' . $dir)) {
             $content = $this->get_dir($dir);
-            if(count($content) > 1){
+            if (count($content) > 1) {
                 $result = 1;
             }
         }
@@ -82,6 +82,11 @@ class handler {
 
     function handle_funds() {
         $funds = $this->get_dir('fond');
+        foreach ($funds as $i => $entry) {
+            if (!is_dir('fond' . '/' . $entry)) {
+                unset($funds[$i]);
+            }
+        }
         foreach ($funds as $fund) {
             if ($fund != 'tmp') {
                 $fund_id = trim(stristr($fund, ' '));
@@ -128,9 +133,15 @@ class handler {
     function unpack_data_zip(
             $data
     ) {
+        $stats = [
+            'funds' => 0,
+            'invs' => 0,
+            'docs' => 0,
+            'entries' => 0
+        ];
 
         $zip = new \ZipArchive();
-        $zip->open(__DIR__ . '/../../../fond/' . $data . '.zip');
+        $zip->open(__DIR__ . '/../../../fond/' . $data);
 
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $stat = $zip->statIndex($i);
@@ -140,38 +151,54 @@ class handler {
         }
         $zip->close();
 
-        $zip->open(__DIR__ . '/../../../fond/' . $data . '.zip');
+        $zip->open(__DIR__ . '/../../../fond/' . $data);
         $zip->extractTo(__DIR__ . '/../../../fond/tmp/');
         $zip->close();
 
-        $this->file->remove_file('fond/', $data . '.zip');
+        $this->file->remove_file('fond', $data);
 
-        $this->restore_zip();
+        $stats = $this->restore_zip();
         $this->handle_funds();
 
-        return;
+        return $stats;
     }
 
     function restore_zip() {
 
         $tmp = $this->get_dir('fond/tmp');
+        $stats = [
+            'funds' => 0,
+            'invs' => 0,
+            'docs' => 0,
+            'entries' => 0
+        ];
 
         foreach ($tmp as $fund) {
+            ++$stats['funds'];
             $fund_name = $this->zip_stringer($fund, 'dec');
-            $this->file->rename_file('fond/tmp', $fund, $fund_name);
+            if ($fund_name != $fund) {
+                $this->file->rename_file('fond/tmp', $fund, $fund_name);
+            }
             $inventories = $this->get_dir('fond/tmp/' . $fund_name);
             foreach ($inventories as $inv) {
+                ++$stats['invs'];
                 $inv_name = $this->zip_stringer($inv, 'dec');
-                $this->file->rename_file('fond/tmp/' . $fund_name, $inv, $inv_name);
+                if ($inv_name != $inv) {
+                    $this->file->rename_file('fond/tmp/' . $fund_name, $inv, $inv_name);
+                }
                 $docs = $this->get_dir('fond/tmp/' . $fund_name . '/' . $inv_name);
                 foreach ($docs as $doc) {
+                    ++$stats['docs'];
                     $doc_name = $this->zip_stringer($doc, 'dec');
-                    $this->file->rename_file('fond/tmp/' . $fund_name . '/' . $inv_name, $doc, $doc_name);
+                    if ($doc_name != $doc) {
+                        $this->file->rename_file('fond/tmp/' . $fund_name . '/' . $inv_name, $doc, $doc_name);
+                    }
                     $entries = $this->get_dir('fond/tmp/' . $fund_name . '/' . $inv_name . '/' . $doc_name);
                     foreach ($entries as $entry) {
                         if (($entry == 'Thumbs.db') || ($entry == 'thumbs.db')) {
                             $this->file->remove_file('fond/tmp/' . $fund_name . '/' . $inv_name . '/' . $doc_name, $entry);
                         } else {
+                            ++$stats['entries'];
                             $file_name = explode('.', $entry);
                             array_pop($file_name);
                             $entry_name = implode('.', $file_name);
@@ -181,8 +208,37 @@ class handler {
                     }
                 }
             }
-            $this->file->move_file('fond/tmp', $fund_name, 'fond');
+            $dir = __DIR__ . '/../../../fond/';
+            if (file_exists($dir . $fund_name)) {
+                $inv_c = $this->get_dir('fond/tmp/' . $fund_name);
+                foreach ($inv_c as $inv_f) {
+                    if (file_exists($dir . $fund_name . '/' . $inv_f)) {
+                        $doc_c = $this->get_dir('fond/tmp/' . $fund_name . '/' . $inv_f);
+                        foreach ($doc_c as $doc_f) {
+                            if (file_exists($dir . $fund_name . '/' . $inv_f . '/' . $doc_f)) {
+                                $ent_c = $this->get_dir('fond/tmp/' . $fund_name . '/' . $inv_f . '/' . $doc_f);
+                                foreach ($ent_c as $ent_f) {
+                                    if (!file_exists($dir . $fund_name . '/' . $inv_f . '/' . $doc_f . '/' . $ent_f)) {
+                                        $this->file->move_file('fond/tmp', $fund_name, 'fond/' . $fund_name . '/' . $inv_f . '/' . $doc_f);
+                                    }
+                                }
+                            } else {
+                                $this->file->move_file('fond/tmp', $fund_name, 'fond/' . $fund_name . '/' . $inv_f);
+                            }
+                        }
+                    } else {
+                        $this->file->move_file('fond/tmp', $fund_name, 'fond/' . $fund_name);
+                    }
+                }
+            } else {
+                $this->file->move_file('fond/tmp', $fund_name, 'fond');
+            }
+            if (file_exists($dir . 'tmp/' . $fund_name)) {
+                $this->file->remove_dir('fond/tmp/' . $fund_name);
+            }
         }
+
+        return $stats;
     }
 
     function zip_stringer(

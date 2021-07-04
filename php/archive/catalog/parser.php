@@ -2,9 +2,10 @@
 
 namespace archive\catalog;
 
-include 'php/archive/loader.php';
+include __DIR__ . '/../loader.php';
 
 use archive\database\database as db;
+use archive\tools\file as file;
 
 class parser {
 
@@ -116,14 +117,18 @@ class parser {
 
         foreach ($cat_arr as $row) {
             $cols = explode('#', $row);
-            $catalog_assoc[$cols[0]] = $cols[1];
+            if (isset($cols[1])) {
+                $catalog_assoc[$cols[0]] = $cols[1];
+            }
         }
 
         return $catalog_assoc;
     }
 
     function get_protocol_voc(
-            $protocol
+            $protocol,
+            $fund_id,
+            $inv_id
     ) {
         $voc = [];
         $protocol = str_replace('##', '@#', $protocol);
@@ -152,6 +157,11 @@ class parser {
                     if (!empty(str_replace(' ', '', $col_clean))) {
                         if ($i == 2) {
                             $voc[$f]['num_old'] = $col_clean;
+                            $dir = 'fond/Фонд ' . $fund_id . '/Опись ' . $inv_id . '/д.' . $col_clean;
+                            if (!file_exists(__DIR__ . '/../../../' . $dir)) {
+                                $file = new file();
+                                $file->create_dir($dir);
+                            }
                         } else if ($i == 3) {
                             $voc[$f]['title'] = $col_clean;
                         } else if ($i == 4) {
@@ -329,7 +339,7 @@ class parser {
     ) {
         $fund_doc = $this->read_fund_doc($doc);
         $prot_tbl = $this->get_protocol_tbl($fund_doc);
-        $prot_voc = $this->get_protocol_voc($prot_tbl);
+        $prot_voc = $this->get_protocol_voc($prot_tbl, $fund_id, $inv_id);
         $this->push_protocol_db($fund_id, $inv_id, $prot_voc);
 
         return $prot_voc;
