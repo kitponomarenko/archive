@@ -45,9 +45,7 @@ class viewer {
 
         return $result;
     }
-    
-    
-    
+   
     
 
 }

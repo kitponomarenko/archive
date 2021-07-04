@@ -93,3 +93,11 @@ function define_zoom() {
 $('#doc_viewport>div').bind('contextmenu', function () {
     return false;
 });
+
+$(document).on('click', '#doc_close', function () {
+    window.location.href = 'lib';
+});
+
+$(document).on('click', '[name="doc_page_switch"]', function () {
+    window.location.href = $(this).data('link');
+});

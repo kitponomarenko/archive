@@ -11,7 +11,7 @@ return '<div class="protocol_search_res">
             <a href="doc?id=' . $content['id'] . '">' . $content['title'] . '</a>    
         </div>
         <div>
-            <p>' . $content['num_old'] . '</p>
+            <p>(' . $content['num_old'] . ')</p>
             <p>' . $content['date'] . '</p>
             ' . $pages_total . '   
         </div>

@@ -17,6 +17,8 @@
     --large_font_size: 64px;
     --huge_font_size: 96px;
 
+    --tiny_margin: 16px;
+    --min_margin: 16px;
     --basic_margin: 32px;
     --av_margin: 64px;    
 
@@ -48,8 +50,8 @@ html {
     font-size: var(--basic_font_size);
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
+    background-color: var(--color_bacakground);
 }
-
 
 * {
     text-size-adjust: none;
@@ -187,6 +189,10 @@ a:hover>u {
 }
 
 .home_wrap>div:first-child{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
     background-color: var(--color_brand);
     padding: var(--av_margin);
     box-sizing: border-box;   
@@ -240,6 +246,25 @@ a:hover>u {
     font-size: var(--big_font_size);
 }
 
+.home_main_link{
+    display: block;
+    height: 64px;
+    padding: 0 var(--av_margin);
+    box-sizing: border-box;
+    background-color: var(--color_white);
+    color: var(--color_black);
+    font-size: var(--big_font_size);
+    line-height: 64px;
+    border-radius: 64px;
+    cursor: pointer;
+    transition: var(--basic_transition);
+}
+
+.home_main_link:hover{
+    background-color: var(--color_brand);
+    color: var(--color_white);
+}
+
 .doc_wrap{
     display: flex;
     flex-direction: row;
@@ -277,4 +302,310 @@ a:hover>u {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.doc_bar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start; 
+    width: 25%;
+    height: 100%;
+    padding: var(--basic_margin);
+    box-sizing: border-box;
+}
+
+
+
+.doc_info>p{
+    border-top: 1px solid var(--color_black);
+    padding: var(--min_margin) 0 0;
+    margin: var(--min_margin) 0 0;
+    color: var(--color_grey_dark);
+}
+
+.doc_view_controls,
+.doc_page_controls{
+    width: 100%;
+}
+
+.doc_view_controls>div:first-child>p,
+.doc_page_controls>div:first-child>p{
+    color: var(--color_grey);
+    margin: 0 0 var(--min_margin);
+}
+
+.doc_view_controls>div,
+.doc_page_controls>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.doc_view_controls>div:last-child{    
+    border: 1px solid var(--color_black);
+}
+
+.doc_view_controls>div>button,
+.doc_page_controls>div>button,
+.doc_close{
+    border: none;
+    background-color: transparent;
+    font-size: var(--big_font_size);
+    padding: var(--basic_margin);
+    box-sizing: border-box;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: var(--basic_transition);
+    line-height: 1;
+}
+
+.doc_view_controls>div>button:nth-child(1),
+.doc_view_controls>div>button:nth-child(3){
+    width: 35%;
+}
+
+.doc_view_controls>div>button:nth-child(2){
+    width: 30%;
+    border-left: 1px solid var(--color_black);
+    border-right: 1px solid var(--color_black);
+}
+
+.doc_view_controls>div>button:hover,
+.doc_page_controls>div>button:hover,
+.doc_close:hover{
+    background-color: var(--color_black);
+    color: var(--color_white);
+}
+
+.doc_page_controls>div>button{
+    width: 50%;
+}
+
+.doc_page_controls>div>button:first-child{
+    border: 1px solid var(--color_black);
+    border-right: 0;
+}
+
+.doc_page_controls>div>button:first-child>svg{
+    transform: rotateZ(180deg);
+}
+
+.doc_page_controls>div>button:hover path{
+    fill: var(--color_white);
+}
+
+.doc_page_controls>div>button:last-child{
+    background-color: var(--color_brand);
+    border: 1px solid var(--color_brand);
+}
+
+.doc_page_controls>div>button:last-child path{
+    fill: var(--color_white);
+}
+
+.doc_page_controls>div>button:last-child:hover{
+    background-color: var(--color_brand_alt);
+}
+
+
+.doc_close{
+    width: 100%;
+    border: 1px solid var(--color_black);
+    font-size: var(--basic_font_size);
+}
+
+.doc_page_info{
+    width: 100%;
+    border: 1px solid var(--color_grey);
+    padding: var(--basic_margin);
+    box-sizing: border-box;
+    color: var(--color_grey);
+}
+
+.lib_wrap{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.lib_wrap>div:first-child{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: var(--color_brand);
+    padding: var(--av_margin);
+    box-sizing: border-box;   
+    height: 100vh;
+    width: 50%;
+}
+
+.lib_wrap>div:first-child>div>p{
+    margin: var(--basic_margin) 0 0;
+    font-size: var(--big_font_size);
+}
+
+.lib_wrap>div:first-child *:not(input){
+    color: var(--color_white);
+}
+
+.search_controls{
+    width: 100%;
+}
+
+.search_controls>div:first-child{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 0 var(--min_margin);
+}
+
+.search_controls>div:first-child>button{
+    height: 48px;
+    padding: 0 var(--av_margin);
+    box-sizing: border-box;
+    border: 1px solid var(--color_white);
+    border-radius: 48px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: var(--basic_transition);
+}
+
+.search_controls>div:first-child>button:not(:last-child){
+    margin: 0 var(--min_margin) 0 0;
+}
+
+.search_controls>div:first-child>button:hover,
+.search_controls>div:first-child>button.active{
+    background-color: var(--color_white);
+    color: var(--color_brand);
+}
+
+.search_controls>input{
+    width: 100%;
+    height: 64px;
+    padding: 8px var(--basic_margin);
+    box-sizing: border-box;
+    border: none;
+    background-color: var(--color_white);
+    color: var(--color_black);
+}
+
+.lib_wrap>div:last-child{
+    min-height: 100%;
+    width: 50%;
+    margin: 0 0 0 50%;
+    padding: var(--av_margin);
+    box-sizing: border-box;   
+}
+
+.search_results{
+    margin: var(--av_margin) 0 0;
+}
+
+.protocol_search_res,
+.catalog_search_res{
+    width: 100%;
+    margin: 0 0 var(--av_margin);
+}
+
+.protocol_search_res>div,
+.catalog_search_res>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.protocol_search_res>div:first-child{
+    border-bottom: 1px solid var(--color_black);
+}
+
+.protocol_search_res>div:first-child>p:first-child{
+    font-size: var(--large_font_size);
+    width: 184px;
+    padding: 0 var(--min_margin) var(--min_margin) 0;
+    margin: 0 var(--min_margin) 0 0;
+    border-right: 1px solid var(--color_black);
+    flex-shrink: 0;
+    line-height: 1;
+    color: var(--color_brand);
+}
+
+.protocol_search_res>div:first-child>a:last-child{
+    width: 100%;
+    padding: 0 0 var(--min_margin) 0;
+    cursor: pointer;
+    transition: var(--basic_transition);
+}
+
+.protocol_search_res>div:last-child{
+    margin: var(--min_margin) 0 0;
+    justify-content: space-between;
+}
+
+.protocol_search_res>div:last-child>p{
+    color: var(--color_grey);
+}
+
+.catalog_search_res>div:first-child>p:first-child{
+    width: 100%;
+    font-size: var(--large_font_size);
+    padding: 0 var(--min_margin) var(--min_margin) 0;
+    margin: 0 var(--min_margin) 0 0;
+    border-right: 1px solid var(--color_black);
+    color: var(--color_brand);
+}
+
+.catalog_search_res>div:first-child>p:last-child{
+    width: 200px;
+    color: var(--color_grey);
+}
+
+.catalog_search_res>div:not(:first-child){
+    border-top: 1px solid var(--color_black);
+    padding: var(--min_margin) 0;
+}
+
+.catalog_search_res>div:not(:first-child)>a:first-child{
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    transition: var(--basic_transition);
+}
+
+.catalog_search_res>div:not(:first-child)>a:nth-child(2){
+    display: block;
+    width: 200px;
+    color: var(--color_brand);
+    text-align: right;
+    cursor: pointer;
+    transition: var(--basic_transition);
+}
+
+.btn_more>button{
+    width: 100%;
+    height: 64px;
+    border-radius: 64px;
+    border: 1px solid var(--color_black);
+    padding: 0 var(--av_margin);
+    box-sizing: border-box;
+    background-color: transparent;
+    font-size: var(--big_font_size);
+}
+
+.protocol_search_res>div:first-child>a:last-child:hover,
+.catalog_search_res>div:not(:first-child)>a:hover{
+    text-decoration: underline;
 }
