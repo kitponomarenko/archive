@@ -26,7 +26,7 @@ $doc_content = $admin->get_docs($page['content']['fund'], $page['content']['inv'
             </div>
         </div>
         <div class="cabinet_side" id="inv_data" data-fund="<?= $page['content']['fund'] ?>" id="inv_data" data-inv="<?= $page['content']['inv'] ?>">
-            <h3>Описи фонда № <?= $page['content']['fund'] ?></h3>
+            <h3>Документы описи № <?= $page['content']['inv'] ?> фонда № <?= $page['content']['fund'] ?></h3>
             <div id="docs_results" class="search_results"><?= $doc_content['content'] ?></div>
             <div id="docs_more" class="btn_more"><?= $doc_content['more'] ?></div>
         </div>
