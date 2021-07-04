@@ -93,10 +93,46 @@ $tbl_arr = [
 	)"
 ];
 
+$pages_arr = [
+    [
+        'url' => 'index',
+        'access' => 1,
+        'title' => 'Государственный архив Оренбургской области'
+    ],
+    [
+        'url' => 'doc',
+        'access' => 1,
+        'title' => 'Документ',
+        'js' => 'viewer',
+        'content_tbl' => 'protocols',
+        'dynamic_meta' => 'true'
+    ],
+    [
+        'url' => 'lib',
+        'access' => 1,
+        'title' => 'Читальный зал',
+        'js' => 'search'
+    ],
+    [
+        'url' => 'cabinet',
+        'access' => 1,
+        'title' => 'Личный кабинет',
+        'js' => 'cabinet'
+    ]
+];
+
 foreach ($tbl_arr as $key => $val) {
     $result = $db->create_table($key, $val);
     if ($result) {
         echo "<b>S U C C E S S:</b> table $key has been created<br>";
+    }
+}
+
+foreach ($pages_arr as $row) {
+    $page_url = $row['url'];
+    if (empty($db->fetch_query('pages', "WHERE url='$page_url'"))) {
+        $db->insert_row('pages', $row);
+        echo "<b>S U C C E S S:</b> page $page_url has been created<br>";
     }
 }
 
