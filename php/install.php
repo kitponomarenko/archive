@@ -105,7 +105,8 @@ $pages_arr = [
         'title' => 'Документ',
         'js' => 'viewer',
         'content_tbl' => 'protocols',
-        'dynamic_meta' => 'true'
+        'dynamic_meta' => 'true',
+        'redirect_id' => 3
     ],
     [
         'url' => 'lib',
@@ -123,6 +124,39 @@ $pages_arr = [
         'access' => 1,
         'title' => 'Автозагрузка',
         'js' => 'autoload,files'
+    ],
+    [
+        'url' => 'funds',
+        'access' => 1,
+        'title' => 'Фонды',
+        'js' => 'funds'        
+    ],
+    [
+        'url' => 'invs',
+        'access' => 1,
+        'title' => 'Описи',
+        'js' => 'invs',
+        'content_tbl' => 'funds',
+        'dynamic_meta' => 'true',
+        'redirect_id' => 6
+    ],
+    [
+        'url' => 'prots',
+        'access' => 1,
+        'title' => 'Дела',
+        'js' => 'docs,files',
+        'content_tbl' => 'invs',
+        'dynamic_meta' => 'true',
+        'redirect_id' => 6
+    ],
+    [
+        'url' => 'entries',
+        'access' => 1,
+        'title' => 'Страницы',
+        'js' => 'entries',
+        'content_tbl' => 'protcols',
+        'dynamic_meta' => 'true',
+        'redirect_id' => 6
     ]
 ];
 

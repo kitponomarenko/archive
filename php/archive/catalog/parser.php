@@ -35,7 +35,7 @@ class parser {
     function read_fund_doc(
             $doc
     ) {
-        $file_path = __DIR__ . '/../../../docs/funds/' . $doc . '.doc';
+        $file_path = __DIR__ . '/../../../docs/funds/' . $doc;
         if (file_exists($file_path)) {
             if (($fund = fopen($file_path, 'r')) !== false) {
                 $headers = fread($fund, 0xA00);

@@ -738,6 +738,7 @@ a:hover>u {
     box-sizing: border-box;
     min-height: 100vh;
     margin: 0 0 0 50%;
+    overflow-y: auto;
 }
 
 .input_file{
@@ -929,6 +930,108 @@ a:hover>u {
 
 .autoload_result_stats>div>p:last-child{
     font-size: var(--big_font_size);
+}
+
+.fund_ent,
+.inv_ent{
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    transition: var(--basic_transition);
+    margin: 0 0 var(--av_margin);
+}
+
+.fund_ent>p:first-child{
+    font-size: var(--large_font_size);
+    color: var(--color_brand);
+    font-weight: 500;
+    border-bottom: 1px solid var(--color_black);
+    margin: 0 0 8px;
+}
+
+.inv_ent>div,
+.fund_ent>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.inv_ent>div>p:last-child,
+.fund_ent>div:last-child>p:last-child{
+    width: 32px;
+    margin: 0 0 0 var(--basic_margin);
+    text-align: right;
+}
+
+.fund_ent:hover>p:first-child{
+    border-bottom: 4px solid var(--color_brand);
+}
+
+.inv_ent>div:first-child{
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color_black);
+    margin: 0 0 8px;
+}
+
+.inv_ent>div:first-child>p:first-child{
+    font-size: var(--large_font_size);
+    color: var(--color_brand);
+    font-weight: 500;
+    width: 50%;
+    border-right: 1px solid var(--color_black);
+    transition: var(--basic_transition);
+}
+
+.inv_ent>div:first-child>p:last-child{
+    width: 50%;
+}
+
+.inv_ent:hover>div:first-child{
+    border-bottom: 4px solid var(--color_brand);
+}
+
+.inv_ent:hover>div:first-child>p:first-child{
+    border-right: 4px solid var(--color_brand);
+}
+
+.add_fund_form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin: var(--av_margin) 0 0;
+}
+
+.add_fund_form>*{
+    width: calc(50% - var(--basic_margin));
+}
+
+.add_fund_form>div>input{
+    width: 100%;
+    height: 64px;
+    background-color: var(--color_white);
+    border: 0;
+    padding: 0 var(--basic_margin);
+    box-sizing: border-box;
+}
+
+.add_fund_form>button{
+    margin: 0 0 22px;
+}
+
+label>span{
+    color: var(--color_error) !important;
+}
+
+.add_inv_form{
+    margin: var(--av_margin) 0 0;
+}
+
+.add_inv_form>.add_fund_form{
+    margin: var(--basic_margin) 0 0;
 }
 
 * [hidden] {

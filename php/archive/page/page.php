@@ -137,6 +137,8 @@ class page {
             $page
     ) {
         $content_id = filter_input(INPUT_GET, 'id');
+        
+        file_put_contents('synclog.txt', PHP_EOL . $content_id, FILE_APPEND);    
 
         $content_state = false;
         if (isset($content_id)) {

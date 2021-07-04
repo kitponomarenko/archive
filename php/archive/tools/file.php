@@ -29,7 +29,7 @@ class file {
                 'limit' => 1,
                 'randomize_name' => false,
                 'force_type' => ''
-            ], 'doc' => [
+            ], 'inv_doc' => [
                 'size' => 10000,
                 'path' => 'docs/funds',
                 'tmp' => '',
@@ -37,9 +37,11 @@ class file {
                 'success' => 'success_default',
                 'output' => 'uploaded_zip',
                 'mime' => [
-                    'application/msword'
+                    'application/msword',
+                    'application/CDFV2'
                 ],
-                'limit' => 0
+                'limit' => 1,
+                'randomize_name' => false
             ],
             'photo' => [
                 'size' => 3,
