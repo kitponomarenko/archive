@@ -55,7 +55,8 @@ $tbl_arr = [
             title VARCHAR(255) NOT NULL,
             date VARCHAR(255) NOT NULL,
             pages INT NOT NULL,
-            extra LONGTEXT NOT NULL
+            extra LONGTEXT NOT NULL,
+            ready INT NOT NULL DEFAULT '0'
 	)",
     'pages' =>
     "(

@@ -20,6 +20,7 @@ class search {
     function find_docs(
             $search_str,
             $filter_type,
+            $sort = 'ASC',
             $request_num = 0
     ) {
         $words = explode(' ', $search_str);
@@ -34,8 +35,13 @@ class search {
         foreach ($words as $i => $word) {
             $filter[] = [$cols[$filter_type], [$word], 'LIKE'];
         }
+        
+        $sort_arr = ['id' => $sort];
+        if($filter_type == 'protocols'){
+            $sort_arr = ['ready' => 'DESC', 'id' => $sort];
+        }
 
-        return $this->content->get_content($filter_type, $filter, $request_num, ['id' => 'DESC'], 10, null, $filter_type . '_search_res');
+        return $this->content->get_content($filter_type, $filter, $request_num, $sort_arr, 10, null, $filter_type . '_search_res');
     }
 
 }

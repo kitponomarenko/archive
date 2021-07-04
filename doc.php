@@ -10,10 +10,13 @@ $db = new archive\database\database();
 
 $fund = $page['content']['fund'];
 $inv = $page['content']['inv'];
-$num = $page['content']['num'];
+$num = $page['content']['num_old'];
 
 $pages_query = $db->get_query('entries', "WHERE fund='$fund' AND inv='$inv' AND doc='$num'");
 $total_pages = mysqli_num_rows($pages_query);
+if ($total_pages == 0) {
+    $total_pages = 1;
+}
 
 $next_pr = $page_id + 1;
 $next = $db->fetch_query('entries', "WHERE fund='$fund' AND inv='$inv' AND doc='$num' AND priority='$next_pr'", 'id, priority');
@@ -36,13 +39,19 @@ $views = $page_data['views'] + 1;
 $entry_id = $page_data['id'];
 $db->update_row('entries', ['views' => $views], "WHERE id='$entry_id'");
 
+$scan = 'fond/Фонд ' . $fund . '/Опись ' . $inv . '/д.' . $page['content']['num_old'] . '/' . $page_data['entry'];
 
+$doc_not_ready = '';
+if ($page['content']['ready'] == 0) {
+    $scan = '';
+    $doc_not_ready = '<p class="doc_not_ready">К сожалению, в настоящий момент сканы документа отсутствуют в электронной версии архива</p>';
+}
 ?>
 
 <div class="main_wrap">
     <div class="doc_wrap">
         <div class="doc_bar left">
-            <button class="doc_close" id="doc_close">закрыть документ</button>            
+            <button class="doc_close" id="doc_close">закрыть документ</button>  
             <div class="doc_view_controls">   
                 <div><p>масштаб</p><p><span id="doc_zoom_scale">100</span>%</p></div>
                 <div>                    
@@ -53,7 +62,8 @@ $db->update_row('entries', ['views' => $views], "WHERE id='$entry_id'");
             </div>
         </div>
         <div id="doc_viewport" class="doc_viewport">
-            <div style="background-image: url('fond/Фонд <?= $fund ?>/Опись <?= $inv ?>/д.<?= $page['content']['num_old'] ?>/<?= $page_data['entry'] ?>')"></div>
+            <?= $doc_not_ready ?>
+            <div style="background-image: url('<?= $scan ?>')"></div>
         </div>
         <div class="doc_bar right">
             <div class="doc_info">
@@ -63,9 +73,9 @@ $db->update_row('entries', ['views' => $views], "WHERE id='$entry_id'");
             <div class="doc_page_info">
                 <p>фонд <?= $fund ?></p>
                 <p>опись <?= $inv ?></p>
-                <p>документ №<?= $num ?> (<?= $page['content']['num_old'] ?>)</p>
+                <p>документ №<?= $page['content']['num'] ?> (<?= $num ?>)</p>
                 <p><?= $page_data['entry'] ?></p>
-                <p>просмотрено <?= $views ?> раз</p>
+                <p>просмотрено, раз: <?= $views ?></p>
             </div>
             <div class="doc_page_controls">   
                 <div><p>страница</p><p><span id="doc_page_num"><?= $page_id ?></span>/<?= $total_pages ?></p></div>

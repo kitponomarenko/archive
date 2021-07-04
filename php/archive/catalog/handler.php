@@ -33,9 +33,51 @@ class handler {
     function is_ent_exist(
             $fund,
             $inv,
+            $doc,
             $entry
     ) {
-        return $this->db->fetch_query('entries', "WHERE fund='$fund' AND inv='$inv' AND entry='$entry'");
+        return $this->db->fetch_query('entries', "WHERE fund='$fund' AND inv='$inv' AND doc='$doc' AND entry='$entry'");
+    }
+
+    function is_doc_exist(
+            $fund,
+            $inv,
+            $doc
+    ) {
+        return $this->db->fetch_query('protocols', "WHERE fund='$fund' AND inv='$inv' AND num_old='$doc'");
+    }
+
+    function is_doc_ready(
+            $fund,
+            $inv,
+            $doc
+    ) {
+        $result = 0;
+
+        $dir = 'fond/Фонд ' . $fund . '/Опись ' . $inv . '/д.' . $doc;
+        if (file_exists(__DIR__ . '/../../../' . $dir)) {
+            $content = $this->get_dir($dir);
+            if(count($content) > 1){
+                $result = 1;
+            }
+        }
+
+        return $result;
+    }
+
+    function set_doc_ready(
+            $fund,
+            $inv,
+            $doc
+    ) {
+        $db_row = $this->is_doc_exist($fund, $inv, $doc);
+        if ($db_row != false) {
+            $ready = $this->is_doc_ready($fund, $inv, $doc);
+            $id = $db_row['id'];
+            if ($db_row['ready'] != $ready) {
+                $this->db->update_row('protocols', ['ready' => $ready], "WHERE id='$id'");
+            }
+        }
     }
 
     function handle_funds() {
@@ -55,12 +97,13 @@ class handler {
                     $docs = $this->get_dir('fond/' . $fund . '/' . $inv);
                     foreach ($docs as $doc) {
                         $doc_id = substr($doc, 3);
+                        $this->set_doc_ready($fund_id, $inv_id, $doc_id);
                         $entries = $this->get_dir('fond/' . $fund . '/' . $inv . '/' . $doc);
                         $i = 0;
                         foreach ($entries as $entry) {
                             ++$i;
-                            if ($this->is_ent_exist($fund_id, $inv_id, $entry) == false) {
-                                $this->db->insert_row('entries', ['fund' => $fund_id, 'inv' => $inv_id, 'doc' => $doc_id,'entry' => $entry, 'priority' => $i]);
+                            if ($this->is_ent_exist($fund_id, $inv_id, $doc_id, $entry) == false) {
+                                $this->db->insert_row('entries', ['fund' => $fund_id, 'inv' => $inv_id, 'doc' => $doc_id, 'entry' => $entry, 'priority' => $i]);
                             }
                         }
                     }
